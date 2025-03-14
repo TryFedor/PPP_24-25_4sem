@@ -3,6 +3,7 @@ import os
 import socket
 import struct
 
+
 port = 19200
 host = 'localhost'
 root_dir = os.getcwd()
@@ -40,16 +41,12 @@ def print_tree(directory, prefix=""):
 '''
 
 
-def print_tree(data, indent=''):
-    print('data =', data)
-    if isinstance(data, dict):
-        for key, value in data.items():
-            if isinstance(value, str):
-                print(indent + str(key))
-
-
-    else:
-        print(indent + str(data))
+def print_tree(data, indent=0):
+    for key, value in data.items():
+        print(' ' * indent + key)
+        if isinstance(value, dict):
+            print_tree(value, indent + 4)
+            #print('\n')
 
 
 with open('result_file.json', 'r') as file:
@@ -64,7 +61,6 @@ def optimize(client_socket):
     global root_dir
     while True:
 
-        # Получаем команду от клиента
         command = client_socket.recv(1024).decode()
         if not command:
             break
@@ -72,7 +68,7 @@ def optimize(client_socket):
         if command.startswith("change"):
             new_directory = command.split(" ", 1)[1]
             if os.path.isdir(new_directory):
-                root_dir = new_directory  # Получаем список файлов и папок
+                root_dir = new_directory
                 response = "Успешно изменена директория"
             else:
                 response = "Ошибка изменения директории"
@@ -89,11 +85,9 @@ def optimize(client_socket):
         elif command == 'draw':
 
             if flag_dirs:
-                '''
                 with open('result_file.json', 'r') as file:
                     data = json.load(file)
-                response = print_tree(data)
-                '''
+                print_tree(data)
 
             else:
                 response = 'Ошибка! Сначала напиши $ dirs'

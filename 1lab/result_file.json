@@ -1,10 +1,14 @@
 {
-    "directory_structure.json": "FILE.json",
-    "2.py": "FILE.py",
-    "\u041b\u0430\u0431\u043e\u0440\u0430\u0442\u043e\u0440\u043d\u0430\u044f_1.pdf": "FILE.pdf",
-    "1.py": "FILE.py",
-    "result_file.json": "FILE.json",
     "123": {
         "wqws.py": "FILE.py"
-    }
+    },
+    "client.py": "FILE.py",
+    "main.py": "FILE.py",
+    "result_file.json": "FILE.json",
+    "server.py": "FILE.py",
+    "__pycache__": {
+        "client.cpython-312.pyc": "FILE.pyc",
+        "server.cpython-312.pyc": "FILE.pyc"
+    },
+    "\u041b\u0430\u0431\u043e\u0440\u0430\u0442\u043e\u0440\u043d\u0430\u044f_1.pdf": "FILE.pdf"
 }
