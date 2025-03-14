@@ -2,6 +2,7 @@ import json
 import os
 import socket
 import struct
+from termcolor import colored, cprint
 
 
 port = 19200
@@ -41,18 +42,18 @@ def print_tree(directory, prefix=""):
 '''
 
 
-def print_tree(data, indent=0):
+def print_tree(data, indent=0, color='white'):
     for key, value in data.items():
-        print(' ' * indent + key)
+        print(colored(' ' * indent + key, color=color))
         if isinstance(value, dict):
-            print_tree(value, indent + 4)
+            print_tree(value, indent + 4, color='light_grey')
             #print('\n')
 
 
-with open('result_file.json', 'r') as file:
-    json_data = json.load(file)
+#with open('result_file.json', 'r') as file:
+#    json_data = json.load(file)
 
-print_tree(json_data)
+#print_tree(json_data)
 
 
 def optimize(client_socket):
@@ -69,15 +70,15 @@ def optimize(client_socket):
             new_directory = command.split(" ", 1)[1]
             if os.path.isdir(new_directory):
                 root_dir = new_directory
-                response = "Успешно изменена директория"
+                response = colored("Директория изменена", 'green')
             else:
-                response = "Ошибка изменения директории"
+                response = colored("Ошибка. Директория не изменена", 'red')
 
         elif command.startswith("ways"):
             response = root_dir
 
         elif command == "exit":
-            print("Клиент закрыл соединение.")
+            print(colored("КЛИЕНТ ЗАКРУГЛИЛСЯ ()", 'red',   attrs=['blink']))
             client_socket.close()
             exit()
             # break
@@ -90,11 +91,11 @@ def optimize(client_socket):
                 print_tree(data)
 
             else:
-                response = 'Ошибка! Сначала напиши $ dirs'
+                response = colored('Ошибка! Сначала напиши $ dirs', 'red')
 
 
         elif command == 'dirs':
-            response = 'Файл готов!'
+            response = colored('Файл готов result_file.json готов', 'light_green')
             file_structure.clear()
             dir_s(root_dir, file_structure)
             with open('result_file.json', 'w') as json_file:
@@ -113,7 +114,7 @@ def start():
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind(server_address)
     server_socket.listen(5)
-    print("Сервер запущен и слушает на порту 19200")
+    print("Сервер запущен. ПОРТ - 19200")
 
     while True:
         client_socket, addr = server_socket.accept()

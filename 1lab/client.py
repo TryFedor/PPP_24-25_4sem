@@ -1,6 +1,8 @@
 import socket
 import struct
 
+from termcolor import colored
+
 
 def main():
     address = ('localhost', 19200)
@@ -8,11 +10,12 @@ def main():
     socket_client.connect(address)
     try:
         while True:
-            cmd = input("Введите команду: \n"
+            cmd = input(colored("Введите команду: \n"
                         " ways (текущая директория), \n"
                         "dirs (все файлы и подфайлы в текущей директории), \n"
                         "change <NEW WAY>, \n "
-                        "exit (выход из клиента) \n")
+                        "exit (выход из клиента) \n"
+                        "draw (нарисовать дерево) \n", 'green'))
             if cmd.lower() == "exit":
                 socket_client.send(b'exit')
                 break
@@ -26,7 +29,7 @@ def main():
                     if not part:
                         break
                     response_data += part
-                print("Ответ от сервера:")
+                print(colored("Ответ от сервера:", 'light_grey', attrs=['blink', 'underline']))
                 print(response_data.decode())
 
     except Exception as error:

@@ -4,6 +4,7 @@
     },
     "client.py": "FILE.py",
     "main.py": "FILE.py",
+    "requirements.txt": "FILE.txt",
     "result_file.json": "FILE.json",
     "server.py": "FILE.py",
     "__pycache__": {
