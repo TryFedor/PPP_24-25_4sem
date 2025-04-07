@@ -1,19 +1,23 @@
-from pydantic import BaseModel, EmailStr
-
+from pydantic import BaseModel
+from datetime import datetime
+from typing import Optional
 
 class UserCreate(BaseModel):
-    email: EmailStr  # корректный емайл
-    password: str
-
+    email: str
+    password: str  # Пароль для регистрации
 
 class UserResponse(BaseModel):
     id: int
-    email: EmailStr
-    token: str
+    email: str
+    token: str  # JWT-токен в ответе
 
     class Config:
         orm_mode = True
 
 
-class Token(BaseModel):
-    token: str
+class UserMeResponse(BaseModel):
+    id: int
+    email: str
+
+    class Config:
+        orm_mode = True
